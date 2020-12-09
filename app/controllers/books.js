@@ -5,6 +5,7 @@ const router = express.Router();
 const Book = require('../models/books');
 
 module.exports = {
+    getAllBooks: getAllBooks,
     getBooks: getBooks,
     createBook: createBook,
     getBookById: getBookById,
@@ -23,14 +24,15 @@ function createBook(req, res, next) {
     });
 }
 
-function getBooks(req, res, next){
+function getAllBooks(req, res, next){
     Book.find(function(err, result) {       
         if(err){
             return res.json(err);
         }
-        req.resourses.getAllBooks = result;
+        req.resourses.getBooks = result;
         return next();
     });
+    
 }
 
 function getBookById(req, res, next){
@@ -53,6 +55,22 @@ function deleteBookById(req, res, next){
     });
 }
 
+function getBooks(req, res, next) {
+    Book
+    .find()
+    .sort({author: -1})
+    // .populate('user')  -- get all data -- 'user'= numele coloanei din mode.books
+    .populate('user', 'email name, documents.name documents.docType details.age')
+     .exec(function(err, result){
+         if(err){
+             return res.json(err);
+         }
+         req.resourses.getAllBooks = result;
+         return next();
+     });
+ }
+ 
+
 function responseToJSON(prop) {
     console.log('prop', prop);
 
@@ -60,4 +78,3 @@ function responseToJSON(prop) {
       return res.json(req.resourses[prop]);
     }
 }
-

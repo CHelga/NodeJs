@@ -11,7 +11,7 @@ router.get('/users',
     userCtrl.responseToJSON('getAllUsers'),
 );
 
-router.get('/usersById',
+router.get('/users/:userId',
     userCtrl.getUserById,
     userCtrl.responseToJSON('users'),
 );

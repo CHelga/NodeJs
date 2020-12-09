@@ -6,6 +6,11 @@ const router = express.Router();
 
 const userCtrl = require('../controllers/books');
 
+router.get('/books/allBooks',
+    userCtrl.getAllBooks,
+    userCtrl.responseToJSON('getBooks'),
+);
+
 router.get('/books',
     userCtrl.getBooks,
     userCtrl.responseToJSON('getAllBooks'),

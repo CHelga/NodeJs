@@ -31,7 +31,8 @@ function getUsers(req, res, next){
     console.log('params', req.query);
     User.find({"details.role": req.query.role}, function(err, result) {        
         if(err){
-            return res.json(err);
+            err.statusCode = 400;
+            return next(err);
         }
         req.resourses.getAllUsers = result;
         return next();

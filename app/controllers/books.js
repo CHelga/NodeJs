@@ -58,7 +58,7 @@ function deleteBookById(req, res, next){
 function getBooks(req, res, next) {
     Book
     .find()
-    .sort({author: -1})
+    .sort({author: 1})
     // .populate('user')  -- get all data -- 'user'= numele coloanei din mode.books
     .populate('user', 'email name, documents.name documents.docType details.age')
      .exec(function(err, result){
